@@ -9,3 +9,7 @@
 ## The Plan
 
 What does a more accessible wiki for media-based universes look like then? How is it organized?
+
+The primary goal from which all others flow is a wiki that lets the user change what they're viewing based on what media they're interested in. Readability, customization, ease of use, and ease of adding content are paramount.
+
+Pertinent among these sub-goals is the idea that the wiki's design should minimize the need for editorial intervention given the many different ways its information can be displayed. A formulaic and simple editorial structure is therefore prudent along with new ideas as how to cite different types of works (both to be detailed elsewhere).

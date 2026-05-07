@@ -1,6 +1,7 @@
 
-
+using MediaWiki.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaWiki.Controllers;
 [ApiController]
@@ -8,5 +9,25 @@ namespace MediaWiki.Controllers;
 
 public class MediaController : ControllerBase
 {
-    // need to set up dbcontext before I can get anywhere here
+    private MediaWikiDbContext _dbContext;
+
+    public MediaController(MediaWikiDbContext context)
+    {
+        _dbContext = context;
+    }
+
+    [HttpGet("all-media")]
+    public IActionResult GetAllMedia()
+    {
+        var AllMedia =  _dbContext.Media
+            .Include(m => m.MediaTypeId)
+            .ToList();
+
+        if (AllMedia == null || AllMedia.Count < 1)
+        {
+            return BadRequest();
+        }
+
+        return Ok(AllMedia);
+    }
 }
