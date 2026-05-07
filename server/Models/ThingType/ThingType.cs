@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MediaWiki.Models;
 
-// person, place, item, idea
+// person, place, item, idea, event
 public class ThingType
 {
     [Key]

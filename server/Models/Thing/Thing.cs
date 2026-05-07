@@ -9,4 +9,6 @@ public class Thing
     public int ThingId { get; set; }
     public required string ThingName { get; set; }
     // icoll of speaker, subject, other mentions?
+    public int ThingTypeId { get; set; }
+    public ThingType? ThingType { get; set; }
 }
