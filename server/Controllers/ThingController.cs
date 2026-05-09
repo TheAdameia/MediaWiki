@@ -17,11 +17,17 @@ public class ThingController : ControllerBase
         _dbContext = context;
     }
 
-    [HttpGet("id")]
+    [HttpGet("by-id")]
     public IActionResult GetOne(int id)
     {
         return Ok(_dbContext.Things
             .SingleOrDefault(t => t.ThingId == id));
+    }
+
+    [HttpGet("get-all")]
+    public IActionResult GetAll()
+    {
+        return Ok(_dbContext.Things.ToList());
     }
 
     [HttpPost("post-thing")]

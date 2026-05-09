@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import { LandingPage } from "./LandingPage"
-import { CreateMedia } from "./create/createMedia"
+import { CreateMedia } from "./create/CreateMedia"
 import { CreateThing } from "./create/CreateThing"
 import { CreateCitation } from "./create/CreateCitation"
 
