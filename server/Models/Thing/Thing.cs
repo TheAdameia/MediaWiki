@@ -2,7 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MediaWiki.Models;
 
-// person, place, distinct notable object, distinct (local to the universe) idea, distinct event
+// person, place,
+// distinct, specific, and notable: object, (local to the universe) idea, or event
 public class Thing
 {
     [Key]
