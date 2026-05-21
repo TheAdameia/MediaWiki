@@ -13,6 +13,7 @@ type CitationObject = {
     speakerName: SelectOption | null
     primarySubject: SelectOption | null
     otherMentions: SelectOption[]
+    media: SelectOption | null
     citation: string
 }
 
@@ -23,9 +24,15 @@ export const CreateCitation = () => {
         speakerName: null,
         primarySubject: null,
         otherMentions: [],
+        media: null,
         citation: ""
     })
 
+    // conversion for react-select: doesn't need to be state
+    const mediaOptions: SelectOption[] = (allMedia ?? []).map(m => ({
+        value: m.mediaId,
+        label: m.mediaTitle
+    }))
 
     // const handleSubmit = (event) => {
     //     event.preventDefault()
@@ -52,11 +59,31 @@ export const CreateCitation = () => {
         {value: 3, label: 'narrator'}
     ]
 
+    if (allMedia == undefined || allMedia == null) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+
     return (
         <div>
             <h2>Citation Creation Form</h2>
             <div>display of selected options?</div>
             <form>
+                <div>
+                    <label>search for media</label>
+                    <Select 
+                        options={mediaOptions}
+                        placeholder="Select Media"
+                        value={citationObject.media}
+                        onChange={(selectedOption) => {
+                            setCitationObject(prev => ({
+                                ...prev,
+                                media: selectedOption
+                            }))
+                        }}
+                    />
+                </div>
                 <div>
                     <label>search for speaker (thing)</label>
                     <Select
