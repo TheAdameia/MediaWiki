@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { GetAllMedia } from "../managers/mediaManager";
+import type { Media } from "../components/types/media";
 
 type AppProviderProps = {
     children: ReactNode
@@ -7,17 +9,28 @@ type AppProviderProps = {
 type AppContextType = {
     username: string
     setUsername: React.Dispatch<React.SetStateAction<string>>
+    allMedia: Media[] | undefined
 }
 
 const AppContext = createContext<AppContextType | null>(null)
 
 export const AppProvider = ({ children }: AppProviderProps) => {
     const [username, setUsername] = useState("")
+    const [allMedia, setAllMedia] = useState()
+
+    const getAndSetAllMedia = () => {
+        GetAllMedia().then(setAllMedia)
+    }
+
+    useEffect(() => {
+        getAndSetAllMedia()
+    }, [])
 
     return (
         <AppContext.Provider value={{
             username,
-            setUsername
+            setUsername,
+            allMedia
         }}>
         {children}
         </AppContext.Provider>

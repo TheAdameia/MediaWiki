@@ -6,9 +6,14 @@ type MediaPostDTO = {
     mediaPostDTOReleaseDate: string
 }
 
-export const GetAllMedia = () => {
-    return fetch(_apiUrl + `/all-media`)
-        .then((res) => res.json())
+export const GetAllMedia = async () => {
+    const res = await fetch(_apiUrl + `/all-media`)
+
+    if (!res.ok) {
+        throw new Error(`API Error: ${res.status}`)
+    }
+
+    return res.json()
 }
 
 export const PostMedia = (mediaPostDTO: MediaPostDTO) => {

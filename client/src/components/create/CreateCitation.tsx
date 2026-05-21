@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Select from "react-select"
 import { Input } from "reactstrap"
+import { useAppContext } from "../../contexts/AppContext"
 
 // react-select always works in objects
 type SelectOption = {
@@ -16,6 +17,7 @@ type CitationObject = {
 }
 
 export const CreateCitation = () => {
+    const { allMedia } = useAppContext()
     const [citationObject, setCitationObject] = useState<CitationObject>
     ({
         speakerName: null,

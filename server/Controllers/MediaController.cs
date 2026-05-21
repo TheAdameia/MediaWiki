@@ -20,7 +20,6 @@ public class MediaController : ControllerBase
     public IActionResult GetAllMedia()
     {
         var AllMedia =  _dbContext.Media
-            .Include(m => m.MediaTypeId)
             .ToList();
 
         if (AllMedia == null || AllMedia.Count < 1)
