@@ -2,12 +2,7 @@ import { useState } from "react"
 import Select from "react-select"
 import { Input } from "reactstrap"
 import { useAppContext } from "../../contexts/AppContext"
-
-// react-select always works in objects
-type SelectOption = {
-    value: number
-    label: string
-}
+import type { SelectOption } from "../types/selectOption"
 
 type CitationObject = {
     speakerName: SelectOption | null

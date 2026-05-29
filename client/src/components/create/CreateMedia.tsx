@@ -1,11 +1,7 @@
 import { useState } from "react"
 import Select from "react-select"
 import { Input } from "reactstrap"
-
-type SelectOption = {
-    value: number
-    label: string
-}
+import type { SelectOption } from "../types/selectOption"
 
 type MediaObject = {
     title: string,

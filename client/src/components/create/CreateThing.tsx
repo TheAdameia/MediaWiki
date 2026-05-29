@@ -1,11 +1,8 @@
 import { useState } from "react"
 import Select from "react-select"
 import { Input } from "reactstrap"
+import type { SelectOption } from "../types/selectOption"
 
-type SelectOption = {
-    value: number
-    label: string
-}
 
 type ThingObject = {
     name: string
