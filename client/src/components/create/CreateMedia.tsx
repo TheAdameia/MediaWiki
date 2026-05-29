@@ -2,6 +2,7 @@ import { useState } from "react"
 import Select from "react-select"
 import { Input } from "reactstrap"
 import type { SelectOption } from "../types/selectOption"
+import { useAppContext } from "../../contexts/AppContext"
 
 type MediaObject = {
     title: string,
@@ -10,6 +11,7 @@ type MediaObject = {
 }
 
 export const CreateMedia = () => {
+    const { mediaTypes } = useAppContext()
     const [mediaObject, setMediaObject] = useState<MediaObject>
     ({
         title: "",
@@ -17,12 +19,11 @@ export const CreateMedia = () => {
         mediaType: null
     })
 
-    // replace with appcontext
-    const options = [
-        { value: 1, label: 'Bob'},
-        { value: 2, label: 'Joe'},
-        { value: 3, label: 'Ana'}
-    ]
+    // conversion for react-select: doesn't need to be state
+    const mediaTypeOptions: SelectOption[] = (mediaTypes ?? []).map(m => ({
+        value: m.mediaTypeId,
+        label: m.mediaTypeClassification
+    }))
 
     
     return (
@@ -56,7 +57,7 @@ export const CreateMedia = () => {
                 <div>
                     <label>Media Type</label>
                     <Select
-                        options={options}
+                        options={mediaTypeOptions}
                         placeholder="Select Media Type"
                         value={mediaObject.mediaType}
                         onChange={(selectedOption) => {

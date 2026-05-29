@@ -2,6 +2,7 @@ import { useState } from "react"
 import Select from "react-select"
 import { Input } from "reactstrap"
 import type { SelectOption } from "../types/selectOption"
+import { useAppContext } from "../../contexts/AppContext"
 
 
 type ThingObject = {
@@ -10,20 +11,19 @@ type ThingObject = {
 }
 
 export const CreateThing = () => {
+    const { thingTypes } = useAppContext()
     const [thingObject, setThingObject] = useState<ThingObject>
     ({
         name: "",
         thingType: null
     })
 
-    //replace with appcontext
-    const options = [
-        { value: 1, label: 'Person'},
-        { value: 2, label: 'Place'},
-        { value: 3, label: 'Item'},
-        { value: 4, label: 'Idea'},
-        { value: 5, label: 'Event'}
-    ]
+    // conversion for react-select: doesn't need to be state
+    const thingTypeOptions: SelectOption[] = (thingTypes ?? []).map(t => ({
+        value: t.thingTypeId,
+        label: t.thingTypeClassification
+    }))
+
 
     return (
         <div>
@@ -44,7 +44,7 @@ export const CreateThing = () => {
                 <div>
                     <label>Media Type</label>
                     <Select
-                        options={options}
+                        options={thingTypeOptions}
                         placeholder="Select Thing Type"
                         value={thingObject.thingType}
                         onChange={(selectedOption) => {

@@ -13,7 +13,7 @@ type CitationObject = {
 }
 
 export const CreateCitation = () => {
-    const { allMedia } = useAppContext()
+    const { allMedia, allThings } = useAppContext()
     const [citationObject, setCitationObject] = useState<CitationObject>
     ({
         speakerName: null,
@@ -23,36 +23,21 @@ export const CreateCitation = () => {
         citation: ""
     })
 
-    // conversion for react-select: doesn't need to be state
+    // conversions for react-select: doesn't need to be state
     const mediaOptions: SelectOption[] = (allMedia ?? []).map(m => ({
         value: m.mediaId,
         label: m.mediaTitle
+    }))
+
+    const thingOptions: SelectOption[] = (allThings ?? []).map(t => ({
+        value: t.thingId,
+        label: t.thingName
     }))
 
     // const handleSubmit = (event) => {
     //     event.preventDefault()
     // // this is gonna need to reduce whatever nested object monstrosity react-select produces into a DTO. 
     // }
-
-
-    // replace these with appcontext
-    const options = [
-        { value: 1, label: 'Bob'},
-        { value: 2, label: 'Joe'},
-        { value: 3, label: 'Ana'}
-    ]
-
-    const options2 = [
-        {value: 4, label: 'fourth'},
-        {value: 5, label: 'fifth'},
-        {value: 6, label: 'sixth'}
-    ]
-
-    const options3 = [
-        {value: 1, label: 'glorp'},
-        {value: 2, label: 'the other guy'},
-        {value: 3, label: 'narrator'}
-    ]
 
     if (allMedia == undefined || allMedia == null) {
         return (
@@ -82,7 +67,7 @@ export const CreateCitation = () => {
                 <div>
                     <label>search for speaker (thing)</label>
                     <Select
-                        options={options3}
+                        options={thingOptions}
                         placeholder="Search speaker"
                         value={citationObject.speakerName}
                         onChange={(selectedOption) => {
@@ -96,7 +81,7 @@ export const CreateCitation = () => {
                 <div>
                     <label>search for primary subject</label>
                     <Select
-                        options={options2}
+                        options={thingOptions}
                         placeholder="Search primary subject"
                         value={citationObject.primarySubject}
                         onChange={(selectedOption) => {
@@ -110,7 +95,7 @@ export const CreateCitation = () => {
                 <div>
                     <label>search for other mentions</label>
                     <Select 
-                        options={options}
+                        options={thingOptions}
                         isMulti
                         placeholder="Search things"
                         value={citationObject.otherMentions}

@@ -5,6 +5,8 @@ import { GetAllMediaTypes } from "../managers/mediaTypeController";
 import type { MediaType } from "../components/types/mediaType";
 import { GetAllThingTypes } from "../managers/thingTypeManager";
 import type { ThingType } from "../components/types/thingType";
+import { GetAllThings } from "../managers/thingManager";
+import type { Thing } from "../components/types/thing";
 
 type AppProviderProps = {
     children: ReactNode
@@ -16,6 +18,7 @@ type AppContextType = {
     allMedia: Media[] | undefined
     mediaTypes: MediaType[] | undefined
     thingTypes: ThingType[] | undefined
+    allThings: Thing[] | undefined
 }
 
 const AppContext = createContext<AppContextType | null>(null)
@@ -25,12 +28,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     const [allMedia, setAllMedia] = useState()
     const [mediaTypes, setMediaTypes] = useState()
     const [thingTypes, setThingTypes] = useState()
+    const [allThings, setAllThings] = useState()
 
     const getAndSetAllMedia = () => {
         GetAllMedia().then(setAllMedia)
     }
 
-    const getAndSetMediatypes = () => {
+    const getAndSetMediaTypes = () => {
         GetAllMediaTypes().then(setMediaTypes)
     }
 
@@ -38,16 +42,24 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         GetAllThingTypes().then(setThingTypes)
     }
 
+    const getAndSetAllThings = () => {
+        GetAllThings().then(setAllThings)
+    }
+
     useEffect(() => {
         getAndSetAllMedia()
     }, [])
 
     useEffect(() => {
-        getAndSetMediatypes()
+        getAndSetMediaTypes()
     }, [])
 
     useEffect(() => {
         getAndSetThingTypes()
+    }, [])
+
+    useEffect(() => {
+        getAndSetAllThings()
     }, [])
 
     return (
@@ -56,7 +68,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             setUsername,
             allMedia,
             mediaTypes,
-            thingTypes
+            thingTypes,
+            allThings
         }}>
         {children}
         </AppContext.Provider>
