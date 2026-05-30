@@ -81,7 +81,7 @@ export const CreateMedia = () => {
                         onChange={(selectedOption) => {
                             setMediaObject(prev => ({
                                 ...prev,
-                                mediaTypeId: selectedOption
+                                mediaType: selectedOption
                             }))
                         }}
                     />
@@ -89,8 +89,12 @@ export const CreateMedia = () => {
                 <div>
                     <h4>Review</h4>
                     <div>Title: "{mediaObject.title}"</div>
+                    <div>Type: {mediaObject.mediaType?.label}</div>
                     <div>Release Date: {mediaObject.releaseDate}</div>
                 </div>
+                <button onClick={handleSubmit}>
+                    Submit
+                </button>
             </form>
         </div>
     )

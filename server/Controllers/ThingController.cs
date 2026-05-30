@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MediaWiki.Controllers;
 
 [ApiController]
-[Route("api/controller")]
+[Route("api/[controller]")]
 public class ThingController : ControllerBase
 {
     private MediaWikiDbContext _dbContext;

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MediaWiki.Controllers;
 
 [ApiController]
-[Route("api/controller")]
+[Route("api/[controller]")]
 public class CitationController : ControllerBase
 {
     private MediaWikiDbContext _dbContext;

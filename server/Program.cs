@@ -13,8 +13,6 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-
-Console.WriteLine(builder.Configuration.GetConnectionString("MediaWikiDbConnectionString"));
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
