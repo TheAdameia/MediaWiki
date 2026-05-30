@@ -3,6 +3,7 @@ import Select from "react-select"
 import { Input } from "reactstrap"
 import type { SelectOption } from "../types/selectOption"
 import { useAppContext } from "../../contexts/AppContext"
+import type { MediaPostDTO } from "../../managers/mediaManager"
 
 type MediaObject = {
     title: string,
@@ -25,6 +26,23 @@ export const CreateMedia = () => {
         label: m.mediaTypeClassification
     }))
 
+    const handleSubmit = (event) => {
+        event.preventDefault()
+
+        if (!mediaObject.mediaType) {
+            return
+        }
+
+        const newMedia: MediaPostDTO = {
+            mediaPostDTOTitle: mediaObject.title,
+            mediaPostDTOReleaseDate: mediaObject.releaseDate,
+            mediaPostDTOMediaTypeId: mediaObject.mediaType.value
+        }
+
+        console.log(newMedia)
+
+    }
+
     
     return (
         <div>
@@ -43,7 +61,7 @@ export const CreateMedia = () => {
                     />
                 </div>
                 <div>
-                    <label>Placeholder Release Date</label>
+                    <label>Release Date</label>
                     <Input
                         type="text"
                         value={mediaObject.releaseDate}

@@ -1,6 +1,6 @@
 const _apiUrl = "/api/media"
 
-type MediaPostDTO = {
+export type MediaPostDTO = {
     mediaPostDTOTitle: string
     mediaPostDTOMediaTypeId: number
     mediaPostDTOReleaseDate: string
