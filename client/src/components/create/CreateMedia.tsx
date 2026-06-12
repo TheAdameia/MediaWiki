@@ -3,7 +3,7 @@ import Select from "react-select"
 import { Input } from "reactstrap"
 import type { SelectOption } from "../types/selectOption"
 import { useAppContext } from "../../contexts/AppContext"
-import type { MediaPostDTO } from "../../managers/mediaManager"
+import { PostMedia, type MediaPostDTO } from "../../managers/mediaManager"
 
 type MediaObject = {
     title: string,
@@ -30,6 +30,12 @@ export const CreateMedia = () => {
         event.preventDefault()
 
         if (!mediaObject.mediaType) {
+            window.alert("Media type must be selected")
+            return
+        }
+
+        if (!mediaObject.title) {
+            window.alert("Media must have a title")
             return
         }
 
@@ -40,6 +46,13 @@ export const CreateMedia = () => {
         }
 
         console.log(newMedia)
+
+        PostMedia(newMedia).then(() => {
+            // get and set media
+            // navigate
+        })
+
+        // show confirmation of post to user
 
     }
 

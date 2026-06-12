@@ -58,4 +58,29 @@ public class ThingController : ControllerBase
             return StatusCode(500, $"An error occurred while trying to create a Thing: {ex.Message}");
         }
     }
+
+    [HttpDelete("delete-thing")]
+    public IActionResult DeleteThing(int thingId)
+    {
+        var thingToDelete = _dbContext.Things.SingleOrDefault(t => t.ThingId == thingId);
+
+        if (thingToDelete == null)
+        {
+            return BadRequest($"Thing not found for delete request, id: {thingId}");
+        }
+
+        using var transaction = _dbContext.Database.BeginTransaction();
+        try
+        {
+            _dbContext.Things.Remove(thingToDelete);
+            _dbContext.SaveChanges();
+
+            return NoContent();
+        }
+        catch(Exception ex)
+        {
+            transaction.Rollback();
+            return StatusCode(500, $"An error occurred while trying to delete a Thing: {ex.Message}");
+        }
+    }
 }

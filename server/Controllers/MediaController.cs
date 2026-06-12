@@ -1,3 +1,4 @@
+using System.Transactions;
 using MediaWiki.Data;
 using MediaWiki.Models;
 using MediaWiki.Models.DTOs;
@@ -57,6 +58,34 @@ public class MediaController : ControllerBase
         {
             transaction.Rollback();
             return StatusCode(500, $"An error occurred while trying to create a Media: {ex.Message}");
+        }
+    }
+
+    [HttpDelete("delete-media")]
+    public IActionResult Delete(int mediaId)
+    {
+        // it would be wise to make this and other deletes into soft deletes later
+        // since that requires modifying classes it can wait
+
+        var mediaToDelete = _dbContext.Media.SingleOrDefault(m => m.MediaId == mediaId);
+
+        if (mediaToDelete == null)
+        {
+            return BadRequest($"Media not found for delete request, id: {mediaId}");
+        };
+
+        using var transaction = _dbContext.Database.BeginTransaction();
+        try
+        {
+            _dbContext.Media.Remove(mediaToDelete);
+            _dbContext.SaveChanges();
+
+            return NoContent();
+        }
+        catch(Exception ex)
+        {
+            transaction.Rollback();
+            return StatusCode(500, $"An error occurred while trying to delete a Media: {ex.Message}");
         }
     }
 }

@@ -3,6 +3,7 @@ import Select from "react-select"
 import { Input } from "reactstrap"
 import type { SelectOption } from "../types/selectOption"
 import { useAppContext } from "../../contexts/AppContext"
+import { PostThing, type ThingPostDTO } from "../../managers/thingManager"
 
 
 type ThingObject = {
@@ -24,6 +25,35 @@ export const CreateThing = () => {
         label: t.thingTypeClassification
     }))
 
+    const handleSubmit = (event) => {
+            event.preventDefault()
+    
+            if (!thingObject.thingType) {
+                window.alert("Thing type must be selected")
+                return
+            }
+    
+            if (!thingObject.name) {
+                window.alert("Thing must have a name")
+                return
+            }
+    
+            const newThing: ThingPostDTO = {
+               thingPostDTOName: thingObject.name,
+               thingPostDTOThingTypeId: thingObject.thingType.value
+            }
+    
+            console.log(newThing)
+    
+            PostThing(newThing).then(() => {
+                // get and set thing
+                // navigate
+            })
+    
+            // show confirmation of post to user
+    
+        }
+
 
     return (
         <div>
@@ -42,7 +72,7 @@ export const CreateThing = () => {
                     />
                 </div>
                 <div>
-                    <label>Media Type</label>
+                    <label>Thing Type</label>
                     <Select
                         options={thingTypeOptions}
                         placeholder="Select Thing Type"
@@ -63,6 +93,9 @@ export const CreateThing = () => {
                         : <div>Type: one must be selected</div>
                     }
                 </div>
+                <button onClick={handleSubmit}>
+                    Submit
+                </button>
             </form>
         </div>
     )
