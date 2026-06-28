@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useAppContext } from "../../contexts/AppContext"
 import { slugify } from "../utils/Slugify"
 
@@ -32,6 +32,11 @@ export const MediaPage = () => {
     return (
         // display number of things, citations on page
         <div>
+            <Link to={`/media/list`}>
+                <div>
+                    Return to Media List
+                </div>
+            </Link>
             <div>{filteredMedia.mediaTitle}</div>
             <div>Release date: {filteredMedia.releaseDate}</div>
         </div>
