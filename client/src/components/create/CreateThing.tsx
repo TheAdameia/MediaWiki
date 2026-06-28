@@ -43,8 +43,6 @@ export const CreateThing = () => {
                thingPostDTOThingTypeId: thingObject.thingType.value
             }
     
-            console.log(newThing)
-    
             PostThing(newThing).then(() => {
                 // get and set thing
                 // navigate

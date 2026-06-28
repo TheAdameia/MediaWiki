@@ -7,6 +7,7 @@ import { MediaList } from "./media/MediaList"
 import { ThingList } from "./things/ThingList"
 import { MediaPage } from "./media/MediaPage"
 import { ThingPage } from "./things/ThingPage"
+import { PrimaryTypeDefinitions } from "./dictionary/PrimaryTypeDefinitions"
 
 
 export const ApplicationViews = () => {
@@ -33,6 +34,9 @@ export const ApplicationViews = () => {
                 <Route path="list" element={<ThingList/>} />
                 <Route path="create" element={<CreateThing/>} />
                 <Route path=":thingId/:slug?" element={<ThingPage />} />
+            </Route>
+            <Route path="guide">
+                <Route path="primary-types" element={<PrimaryTypeDefinitions />} />
             </Route>
         </Routes>
     )
