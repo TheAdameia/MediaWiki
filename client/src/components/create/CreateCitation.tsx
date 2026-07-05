@@ -3,6 +3,7 @@ import Select from "react-select"
 import { Input } from "reactstrap"
 import { useAppContext } from "../../contexts/AppContext"
 import type { SelectOption } from "../types/selectOption"
+import { PostCitation } from "../../managers/citationManager"
 
 type CitationObject = {
     speakerName: SelectOption | null
@@ -45,7 +46,6 @@ export const CreateCitation = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        // this is gonna need to reduce whatever nested object monstrosity react-select produces into a DTO. 
 
         if (!citationObject.citation) {
             window.alert("Citation must have content")
@@ -61,6 +61,25 @@ export const CreateCitation = () => {
             window.alert("Citation must have a subject")
             return
         }
+
+        if (!citationObject.media) {
+            window.alert("Citation must specify its origin media")
+            return
+        }
+
+        const citationToPost: CitationPostDTO = {
+            citationPostDTOSpeakerId: citationObject.speakerName.value,
+            citationPostDTOSubjectId: citationObject.primarySubject.value,
+            citationPostDTOMediaId: citationObject.media.value,
+            citationPostDTOTime: citationObject.time,
+            citationPostDTOContent: citationObject.citation
+        }
+
+        PostCitation(citationToPost).then(() => {
+            // get and set citations? idk that might be a lot of data
+        })
+
+        // show confirmation of post to user
 
 
     }
