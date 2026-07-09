@@ -45,8 +45,6 @@ export const CreateMedia = () => {
             mediaPostDTOMediaTypeId: mediaObject.mediaType.value
         }
 
-        console.log(newMedia)
-
         PostMedia(newMedia).then(() => {
             // get and set media
             // navigate

@@ -3,23 +3,26 @@ import Select from "react-select"
 import { Input } from "reactstrap"
 import { useAppContext } from "../../contexts/AppContext"
 import type { SelectOption } from "../types/selectOption"
+import { PostCitation, type CitationPostDTO } from "../../managers/citationManager"
+import { useNavigate } from "react-router-dom"
 
 type CitationObject = {
     speakerName: SelectOption | null
     primarySubject: SelectOption | null
-    otherMentions: SelectOption[]
     media: SelectOption | null
+    time: string
     citation: string
 }
 
 export const CreateCitation = () => {
     const { allMedia, allThings } = useAppContext()
+    const navigate = useNavigate()
     const [citationObject, setCitationObject] = useState<CitationObject>
     ({
         speakerName: null,
         primarySubject: null,
-        otherMentions: [],
         media: null,
+        time: "",
         citation: ""
     })
 
@@ -34,10 +37,46 @@ export const CreateCitation = () => {
         label: t.thingName
     }))
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault()
-    // // this is gonna need to reduce whatever nested object monstrosity react-select produces into a DTO. 
-    // }
+    const handleSubmit = (event) => {
+        event.preventDefault()
+
+        if (!citationObject.citation) {
+            window.alert("Citation must have content")
+            return
+        }
+
+        if (!citationObject.speakerName) {
+            window.alert("Citation must have a speaker (can be the narrator)")
+            return
+        }
+
+        if (!citationObject.primarySubject) {
+            window.alert("Citation must have a subject")
+            return
+        }
+
+        if (!citationObject.media) {
+            window.alert("Citation must specify its origin media")
+            return
+        }
+
+        const citationToPost: CitationPostDTO = {
+            citationPostDTOSpeakerId: citationObject.speakerName.value,
+            citationPostDTOSubjectId: citationObject.primarySubject.value,
+            citationPostDTOMediaId: citationObject.media.value,
+            citationPostDTOTime: citationObject.time,
+            citationPostDTOContent: citationObject.citation
+        }
+
+        PostCitation(citationToPost).then(() => {
+            // get and set citations? idk that might be a lot of data
+            navigate("/")
+        })
+
+        // show confirmation of post to user
+
+
+    }
 
     if (allMedia == undefined || allMedia == null) {
         return (
@@ -48,7 +87,6 @@ export const CreateCitation = () => {
     return (
         <div>
             <h2>Citation Creation Form</h2>
-            <div>display of selected options?</div>
             <form>
                 <div>
                     <label>search for media</label>
@@ -93,18 +131,15 @@ export const CreateCitation = () => {
                     />
                 </div>
                 <div>
-                    <label>search for other mentions</label>
-                    <Select 
-                        options={thingOptions}
-                        isMulti
-                        placeholder="Search things"
-                        value={citationObject.otherMentions}
-                        onChange={(selectedOptions) => {
-                            setCitationObject(prev => ({
-                                ...prev,
-                                otherMentions: [...(selectedOptions || [])]
-                            }))
-                        }}
+                    <label>Time (in-universe)</label>
+                    <Input
+                        type="text"
+                        value={citationObject.time}
+                        onChange={((e) => {
+                            const objectCopy = {...citationObject}
+                            objectCopy.time = e.target.value
+                            setCitationObject(objectCopy)
+                        })}
                     />
                 </div>
                 <div>
@@ -129,12 +164,11 @@ export const CreateCitation = () => {
                         ? <div>Primary Subject: {citationObject.primarySubject?.label}</div>
                         : <div>Primary Subject: one must be selected</div>
                     }
-                    {citationObject.otherMentions.length > 1
-                        ? <div> Mentions:{" "}{citationObject.otherMentions.map(m => m.label).join(", ")}</div>
-                        : <div>No mentions</div>
-                    }
                     <div>Citation: "{citationObject.citation}"</div>
                 </div>
+                <button onClick={handleSubmit}>
+                    Submit
+                </button>
             </form>
         </div>
     )
