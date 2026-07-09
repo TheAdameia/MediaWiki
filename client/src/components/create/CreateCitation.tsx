@@ -3,7 +3,8 @@ import Select from "react-select"
 import { Input } from "reactstrap"
 import { useAppContext } from "../../contexts/AppContext"
 import type { SelectOption } from "../types/selectOption"
-import { PostCitation } from "../../managers/citationManager"
+import { PostCitation, type CitationPostDTO } from "../../managers/citationManager"
+import { useNavigate } from "react-router-dom"
 
 type CitationObject = {
     speakerName: SelectOption | null
@@ -13,17 +14,9 @@ type CitationObject = {
     citation: string
 }
 
-// this should mirror CitationPostDTO.cs
-type CitationPostDTO = {
-    citationPostDTOSpeakerId: number
-    citationPostDTOSubjectId: number
-    citationPostDTOMediaId: number
-    citationPostDTOTime: string
-    citationPostDTOContent: string
-}
-
 export const CreateCitation = () => {
     const { allMedia, allThings } = useAppContext()
+    const navigate = useNavigate()
     const [citationObject, setCitationObject] = useState<CitationObject>
     ({
         speakerName: null,
@@ -77,6 +70,7 @@ export const CreateCitation = () => {
 
         PostCitation(citationToPost).then(() => {
             // get and set citations? idk that might be a lot of data
+            navigate("/")
         })
 
         // show confirmation of post to user
