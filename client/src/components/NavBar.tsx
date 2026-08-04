@@ -17,24 +17,52 @@ const toggleNavbar = () => setOpen(!open);
 
 return (
     <div>
-    <Navbar color="light" light fixed="true" expand="lg">
-        <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        Media Wiki
-        </NavbarBrand>
-        
-        <>
-            <NavbarToggler onClick={toggleNavbar} />
-            <Collapse isOpen={open} navbar>
-            <Nav navbar>
-                <NavItem>
-                    <NavLink tag={RRNavLink} to="/roster">
-                        My Team
-                    </NavLink>
-                </NavItem>
-            </Nav>
-            </Collapse>
-        </>
-    </Navbar>
+        <Navbar color="light" light fixed="true" expand="lg">
+            <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
+            Media Wiki
+            </NavbarBrand>
+            
+            <>
+                <NavbarToggler onClick={toggleNavbar} />
+                <Collapse isOpen={open} navbar>
+                <Nav navbar>
+                    <NavItem>
+                        <NavLink tag={RRNavLink} to="/media/list">
+                            Media List
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={RRNavLink} to="/thing/list">
+                            Thing List
+                        </NavLink>
+                    </NavItem>
+
+                    {/* lock these behind a login later */}
+                    <NavItem>
+                        <NavLink tag={RRNavLink} to="/toggles">
+                            Toggle Overview
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={RRNavLink} to="/media/create">
+                            Create Media
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={RRNavLink} to="/thing/create">
+                            Create Thing
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={RRNavLink} to="citation/create">
+                            Create Citation
+                        </NavLink>
+                    </NavItem>
+
+                </Nav>
+                </Collapse>
+            </>
+        </Navbar>
     </div>
 );
 }
