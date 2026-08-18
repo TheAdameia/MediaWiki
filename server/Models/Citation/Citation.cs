@@ -18,6 +18,7 @@ public class Citation
     public Media? Media { get; set; } // what it happened in
     public required string Time { get; set; } // when it happened in-universe (probably need to refine this as its own class)
     public required string CitationContent { get; set; } // text presented to the user
+    public int FormatType { get; set; }
     // public ICollection<Thing>? Things { get; set; } // any other subjects *directly* involved
     // this one ^ needs to be reframed as a bridge class
 }
