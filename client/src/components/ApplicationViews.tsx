@@ -8,6 +8,7 @@ import { ThingList } from "./things/ThingList"
 import { MediaPage } from "./media/MediaPage"
 import { ThingPage } from "./things/ThingPage"
 import { PrimaryTypeDefinitions } from "./dictionary/PrimaryTypeDefinitions"
+import { MediaToggle } from "./toggles/MediaToggle"
 
 
 export const ApplicationViews = () => {
@@ -38,6 +39,7 @@ export const ApplicationViews = () => {
             <Route path="guide">
                 <Route path="primary-types" element={<PrimaryTypeDefinitions />} />
             </Route>
+            <Route path="toggles" element={<MediaToggle />}/>
         </Routes>
     )
 }

@@ -1,0 +1,13 @@
+.mediaCard-card {
+    border: 1px;
+    border-style: groove;
+}
+
+.mediaCard-inner {
+    display: flex;
+    flex-direction: row;
+}
+
+.mediaCard-info {
+    min-width: 10%;
+}

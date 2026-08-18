@@ -15,3 +15,13 @@ export const PostCitation = (citationPostDTO : CitationPostDTO) => {
         body: JSON.stringify(citationPostDTO)
     })
 }
+
+export const GetAllCitations = async () => {
+    const res = await fetch(_apiUrl + `/all-citations`)
+
+    if (!res.ok) {
+        throw new Error(`API Error: ${res.status}`)
+    }
+
+    return res.json()
+}
