@@ -7,6 +7,8 @@ import { GetAllThingTypes } from "../managers/thingTypeManager";
 import type { ThingType } from "../components/types/thingType";
 import { GetAllThings } from "../managers/thingManager";
 import type { Thing } from "../components/types/thing";
+import { GetAllCitations } from "../managers/citationManager";
+import type { Citation } from "../components/types/citation";
 
 type AppProviderProps = {
     children: ReactNode
@@ -19,6 +21,7 @@ type AppContextType = {
     mediaTypes: MediaType[] | undefined
     thingTypes: ThingType[] | undefined
     allThings: Thing[] | undefined
+    allCitations: Citation[] | undefined
 }
 
 const AppContext = createContext<AppContextType | null>(null)
@@ -29,6 +32,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     const [mediaTypes, setMediaTypes] = useState()
     const [thingTypes, setThingTypes] = useState()
     const [allThings, setAllThings] = useState()
+    const [allCitations, setAllCitations] = useState()
 
     const getAndSetAllMedia = () => {
         GetAllMedia().then(setAllMedia)
@@ -44,6 +48,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
     const getAndSetAllThings = () => {
         GetAllThings().then(setAllThings)
+    }
+
+    const getAndSetAllCitations = () => {
+        GetAllCitations().then(setAllCitations)
     }
 
     useEffect(() => {
@@ -62,6 +70,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         getAndSetAllThings()
     }, [])
 
+    useEffect(() => {
+        getAndSetAllCitations()
+    }, [])
+
     return (
         <AppContext.Provider value={{
             username,
@@ -69,7 +81,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             allMedia,
             mediaTypes,
             thingTypes,
-            allThings
+            allThings,
+            allCitations
         }}>
         {children}
         </AppContext.Provider>

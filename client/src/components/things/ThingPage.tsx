@@ -1,20 +1,22 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useAppContext } from "../../contexts/AppContext"
 import { slugify } from "../utils/Slugify"
+import { CitationCard } from "../citations/CitationCard"
 
 
 export const ThingPage = () => {
     const { thingId, slug } = useParams()
-    const { allThings } = useAppContext()
+    const { allThings, allCitations } = useAppContext()
     const navigate = useNavigate()
 
-    if (!allThings) {
+    if (!allThings || !allCitations) {
         return (
             <div>Loading...</div>
         )
     }
 
     const filteredThings = allThings.find(t => t.thingId === Number(thingId))
+    const filteredCitations = allCitations.find(c => c.subjectId === Number(thingId))
 
     if (!filteredThings) {
         return (
@@ -39,9 +41,13 @@ export const ThingPage = () => {
                 </div>
             </Link>
             <div>{filteredThings.thingName}</div>
-            {/* Sort for citations... display by date.
-            <div>View page where thing is the speaker, thing is the subject, thing is mentioned.</div>
-            <div>Toggle by time system (real or universe)</div> */}
+            <div>
+                {allCitations.map(citation => 
+                    <CitationCard
+                        citation={citation}
+                    />
+                )}
+            </div>
         </div>
     )
 }

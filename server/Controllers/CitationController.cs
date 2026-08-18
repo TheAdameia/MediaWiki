@@ -23,6 +23,13 @@ public class CitationController : ControllerBase
             .SingleOrDefault(c => c.CitationId == id));
     }
 
+    [HttpGet("all-citations")]
+    public IActionResult GetAll()
+    {
+        return Ok(_dbContext.Citations
+            .ToList());
+    }
+
     [HttpPost("post-citation")]
     public IActionResult PostCitation(CitationPostDTO citationPostDTO)
     {

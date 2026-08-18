@@ -1,11 +1,14 @@
+import type { CitationCardProps } from "../types/citationCardProps"
+import "./citation.css"
 
-
-export const citationCard = ({ citation }) => {
+export const CitationCard = ({ citation }: CitationCardProps) => {
 
 
     return (
-        <div>
-            {/* text goes here */}
+        <div className="citationCard-container">
+            <div>
+                {citation.citationContent}
+            </div>
         </div>
     )
 }
