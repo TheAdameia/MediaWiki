@@ -36,13 +36,13 @@ return (
                             Thing List
                         </NavLink>
                     </NavItem>
-
-                    {/* lock these behind a login later */}
                     <NavItem>
                         <NavLink tag={RRNavLink} to="/toggles">
                             Toggle Overview
                         </NavLink>
                     </NavItem>
+
+                    {/* lock these behind a login later */}
                     <NavItem>
                         <NavLink tag={RRNavLink} to="/media/create">
                             Create Media
