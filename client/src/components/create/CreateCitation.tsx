@@ -12,6 +12,7 @@ type CitationObject = {
     media: SelectOption | null
     time: string
     citation: string
+    formatType: SelectOption | null
 }
 
 export const CreateCitation = () => {
@@ -23,8 +24,10 @@ export const CreateCitation = () => {
         primarySubject: null,
         media: null,
         time: "",
-        citation: ""
+        citation: "",
+        formatType: null
     })
+    const [disableMediaField, setDisableMediaField] = useState(false)
 
     // conversions for react-select: doesn't need to be state
     const mediaOptions: SelectOption[] = (allMedia ?? []).map(m => ({
@@ -35,6 +38,17 @@ export const CreateCitation = () => {
     const thingOptions: SelectOption[] = (allThings ?? []).map(t => ({
         value: t.thingId,
         label: t.thingName
+    }))
+
+    //temporary? will these be classes?
+    const formatOptionsRaw = [
+        { typeId: 1, typeName: "text" },
+        { typeId: 2, typeName: "table"}
+    ]
+
+    const formatOptions: SelectOption[] = (formatOptionsRaw ?? []).map(f => ({
+        value: f.typeId,
+        label: f.typeName
     }))
 
     const handleSubmit = (event) => {
@@ -60,12 +74,18 @@ export const CreateCitation = () => {
             return
         }
 
+        if (!citationObject.formatType) {
+            window.alert("Citation Format Type must be set")
+            return
+        }
+
         const citationToPost: CitationPostDTO = {
             citationPostDTOSpeakerId: citationObject.speakerName.value,
             citationPostDTOSubjectId: citationObject.primarySubject.value,
             citationPostDTOMediaId: citationObject.media.value,
             citationPostDTOTime: citationObject.time,
-            citationPostDTOContent: citationObject.citation
+            citationPostDTOContent: citationObject.citation,
+            citationPostDTOFormatType: citationObject.formatType.value
         }
 
         PostCitation(citationToPost).then(() => {
@@ -142,9 +162,27 @@ export const CreateCitation = () => {
                         })}
                     />
                 </div>
+                <div>Thing that determines the format here (disables input in media field if not selected)</div>
+                <div>
+                    <label>Citation Format</label>
+                    <Select
+                        options={formatOptions}
+                        placeholder="Select Citation format"
+                        value={citationObject.formatType}
+                        onChange={(selectedOption) => {
+                            setCitationObject(prev => ({
+                                ...prev,
+                                formatType: selectedOption
+                            }))
+                            setDisableMediaField(true)
+                        }}
+                        
+                    />
+                </div>
                 <div>
                     <label>media field</label>
                     <Input
+                        disabled={disableMediaField}
                         type="text"
                         value={citationObject.citation}
                         onChange={((e) => {

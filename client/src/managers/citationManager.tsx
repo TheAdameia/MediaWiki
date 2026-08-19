@@ -6,6 +6,7 @@ export type CitationPostDTO = {
     citationPostDTOMediaId: number
     citationPostDTOTime: string
     citationPostDTOContent: string
+    citationPostDTOFormatType: number
 }
 
 export const PostCitation = (citationPostDTO : CitationPostDTO) => {

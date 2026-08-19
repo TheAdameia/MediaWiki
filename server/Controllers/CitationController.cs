@@ -47,7 +47,8 @@ public class CitationController : ControllerBase
                 SubjectId = citationPostDTO.CitationPostDTOSubjectId,
                 MediaId = citationPostDTO.CitationPostDTOMediaId,
                 Time = citationPostDTO.CitationPostDTOTime,
-                CitationContent = citationPostDTO.CitationPostDTOContent
+                CitationContent = citationPostDTO.CitationPostDTOContent,
+                FormatType = citationPostDTO.CitationPostFormatType
             };
 
             _dbContext.Citations.Add(citation);
