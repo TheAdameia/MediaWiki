@@ -5,4 +5,5 @@ export type Citation = {
     mediaId: number
     time: string
     citationContent: string
+    formatType: number
 }
