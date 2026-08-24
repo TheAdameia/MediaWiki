@@ -16,7 +16,9 @@ export const ThingPage = () => {
     }
 
     const filteredThings = allThings.find(t => t.thingId === Number(thingId))
-    const filteredCitations = allCitations.find(c => c.subjectId === Number(thingId))
+
+    // This would be replaced by CitationBridge
+    const filteredCitations = allCitations.filter(c => c.subjectId === Number(thingId))
 
     if (!filteredThings) {
         return (
@@ -42,8 +44,9 @@ export const ThingPage = () => {
             </Link>
             <div>{filteredThings.thingName}</div>
             <div>
-                {allCitations.map(citation => 
+                {filteredCitations.map(citation => 
                     <CitationCard
+                        key={citation.citationId}
                         citation={citation}
                     />
                 )}

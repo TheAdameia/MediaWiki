@@ -9,5 +9,5 @@ public class CitationPostDTO
     public int CitationPostDTOMediaId { get; set; }
     public required string CitationPostDTOTime { get; set; }
     public required string CitationPostDTOContent { get; set; }
-    public int CitationPostFormatType { get; set; }
+    public int CitationPostDTOFormatType { get; set; }
 }

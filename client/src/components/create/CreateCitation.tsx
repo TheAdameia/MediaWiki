@@ -27,7 +27,7 @@ export const CreateCitation = () => {
         citation: "",
         formatType: null
     })
-    const [disableMediaField, setDisableMediaField] = useState(false)
+    const [disableCitationField, setDisableCitationField] = useState(true)
 
     // conversions for react-select: doesn't need to be state
     const mediaOptions: SelectOption[] = (allMedia ?? []).map(m => ({
@@ -162,7 +162,6 @@ export const CreateCitation = () => {
                         })}
                     />
                 </div>
-                <div>Thing that determines the format here (disables input in media field if not selected)</div>
                 <div>
                     <label>Citation Format</label>
                     <Select
@@ -174,15 +173,15 @@ export const CreateCitation = () => {
                                 ...prev,
                                 formatType: selectedOption
                             }))
-                            setDisableMediaField(true)
+                            setDisableCitationField(false)
                         }}
                         
                     />
                 </div>
                 <div>
-                    <label>media field</label>
+                    <label>citation field</label>
                     <Input
-                        disabled={disableMediaField}
+                        disabled={disableCitationField}
                         type="text"
                         value={citationObject.citation}
                         onChange={((e) => {

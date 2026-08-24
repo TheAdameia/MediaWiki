@@ -14,6 +14,9 @@ export const CitationCard = ({ citation }: CitationCardProps) => {
         return (
             <div className="citationCard-container">
                 <div>
+                    {citation.time}
+                </div>
+                <div>
                     {citation.citationContent}
                 </div>
             </div>
